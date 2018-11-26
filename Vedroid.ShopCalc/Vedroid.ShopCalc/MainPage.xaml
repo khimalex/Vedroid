@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Vedroid.ShopCalc"
+             x:Class="Vedroid.ShopCalc.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Margin="3" VerticalOptions="CenterAndExpand"
+               Text="Вес:"/>
+        <Entry Grid.Row="0" Grid.Column="1" Margin="3" VerticalOptions="CenterAndExpand"
+               Keyboard="Numeric"
+               Text="{Binding Brutto, Converter={local:DecimalConverter}}"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Margin="3" VerticalOptions="CenterAndExpand"
+               Text="Цена:"/>
+        <Entry Grid.Row="1" Grid.Column="1" Margin="3" VerticalOptions="CenterAndExpand"
+               Keyboard="Numeric"               
+               Text="{Binding Price, Converter={local:DecimalConverter}}"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Margin="3" VerticalOptions="CenterAndExpand"
+               Text="Расчётный вес:"/>
+        <Entry Grid.Row="2" Grid.Column="1" Margin="3" VerticalOptions="CenterAndExpand" 
+               Keyboard="Numeric" Completed="Entry_Completed"
+               Text="{Binding Netto, Converter={local:DecimalConverter}}"/>
+
+        <Label Grid.Row="3" Grid.Column="0" Margin="3" VerticalOptions="CenterAndExpand" 
+               Text="Результат:"/>
+        <Label Grid.Row="3" Grid.Column="1" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" 
+               Text="{Binding Result, Converter={local:DecimalConverter}}"/>
+
+        <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+            ItemsSource="{Binding History}">
+            <ListView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Вес"/>
+                    <Label Grid.Column="1" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Цена"/>
+                    <Label Grid.Column="2" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Расчётный"/>
+                    <Label Grid.Column="3" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Результат"/>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="{Binding ItemBrutto , Converter={local:DecimalConverter}}"/>
+                            <Label Grid.Column="1" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="{Binding ItemPrice  , Converter={local:DecimalConverter}}"/>
+                            <Label Grid.Column="2" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="{Binding ItemNetto  , Converter={local:DecimalConverter}}"/>
+                            <Label Grid.Column="3" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="{Binding ItemResult , Converter={local:DecimalConverter}}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <Button Grid.Row="5" Grid.Column="0" Margin="2" HorizontalOptions="FillAndExpand"
+            Text="Посчитать"
+            Command="{Binding CalcCommand}"/>
+        <Button Grid.Row="5" Grid.Column="1" Margin="2" HorizontalOptions="FillAndExpand"
+            Text="Очистить"
+            Command="{Binding ClearHistoryCommand}"/>
+
+
+    </Grid>
+
+</ContentPage>
